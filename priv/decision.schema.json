@@ -1,0 +1,156 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "search_context",
+        "inspect",
+        "test_configuration",
+        "complete_case"
+      ]
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "arguments": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "query": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "ref_id"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "workflow_id": {
+              "type": "string"
+            },
+            "candidate": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "answer_path": {
+                  "type": "string"
+                },
+                "missing_behavior": {
+                  "type": "string",
+                  "enum": [
+                    "empty",
+                    "needs_review"
+                  ]
+                }
+              },
+              "required": [
+                "answer_path",
+                "missing_behavior"
+              ]
+            }
+          },
+          "required": [
+            "workflow_id",
+            "candidate"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "outcome": {
+              "type": "string",
+              "enum": [
+                "verified_in_sandbox",
+                "coaching_prepared",
+                "escalation_prepared",
+                "needs_information"
+              ]
+            },
+            "summary": {
+              "type": "string"
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "maxItems": 20
+            },
+            "learner_note": {
+              "type": "string"
+            },
+            "test_report_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "guide_title": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "guide_body": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "escalation_owner": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "requested_action": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "outcome",
+            "summary",
+            "evidence_refs",
+            "learner_note",
+            "test_report_id",
+            "guide_title",
+            "guide_body",
+            "escalation_owner",
+            "requested_action"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "action",
+    "reason",
+    "arguments"
+  ]
+}
